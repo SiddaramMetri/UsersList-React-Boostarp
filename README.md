@@ -1,4 +1,4 @@
-# Users List - React - Boostrap 
+# Users List - React - Bootstrap 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
