@@ -1,3 +1,5 @@
+import Button from "./Button";
+
 const UserDetailsCard = (props) => {
   return (
     <>
@@ -7,7 +9,10 @@ const UserDetailsCard = (props) => {
             Name: <span className="fw-bold ms-2">{props.name}</span>
           </p>
           <p>
-            DOB: <span className="fw-bold ms-2">{props.dob}</span>
+            DOB:
+            <span className="fw-bold ms-2">
+              {props.dob.toLocaleDateString()}
+            </span>
           </p>
           <p>
             Gender: <span className="fw-bold ms-2">{props.gender}</span>
@@ -15,6 +20,20 @@ const UserDetailsCard = (props) => {
           <p>
             City: <span className="fw-bold ms-2">{props.city}</span>
           </p>
+          <div className="d-flex justify-content-end">
+            <Button
+              color="danger"
+              onClick={() => {
+                props.setUser((prev) => {
+                  return prev.filter((user) => {
+                    return user.id !== props.id;
+                  });
+                });
+              }}
+            >
+              Delete
+            </Button>
+          </div>
         </div>
       </div>
     </>

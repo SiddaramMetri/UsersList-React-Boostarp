@@ -1,7 +1,12 @@
+import { useState } from "react";
 import CreateUserModal from "./components/CreateUserModal";
 import UserDetailsCard from "./components/UserDetailsCard";
+import Buttons from "./components/Button";
 
 function App() {
+  const [showUserModal, setShowUserModal] = useState(false);
+  const [users, setUser] = useState([]);
+
   return (
     <div className="container mt-5">
       <div className="input-group rounded">
@@ -13,19 +18,35 @@ function App() {
           aria-describedby="search-addon"
         />
       </div>
-      <div className="d-flex justify-content-end">
-        <button type="button" className="btn btn-primary mt-3 text-end">
+      <div className="d-flex justify-content-end mt-3">
+        <Buttons
+          color="primary"
+          onClick={() => {
+            setShowUserModal(true);
+          }}
+        >
           Add User
-        </button>
+        </Buttons>
       </div>
-      <CreateUserModal show={false} />
+      <CreateUserModal
+        show={showUserModal}
+        setShowUserModal={setShowUserModal}
+        creatUser={setUser}
+      />
       <div className="mt-5 d-flex flex-wrap gap-4">
-        <UserDetailsCard
-          name="John"
-          dob="15-02-2023"
-          gender="Male"
-          city="Bangalore"
-        />
+        {users.map((user) => {
+          return (
+            <UserDetailsCard
+              key={user.id}
+              name={user.name}
+              dob={new Date(user.dob)}
+              gender={user.gender}
+              city={user.city}
+              id={user.id}
+              setUser={setUser}
+            />
+          );
+        })}
       </div>
     </div>
   );
