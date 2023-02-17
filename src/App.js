@@ -1,23 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CreateUserModal from "./components/CreateUserModal";
 import UserDetailsCard from "./components/UserDetailsCard";
 import Buttons from "./components/Button";
+import InputField from "./components/InputField";
 
 function App() {
   const [showUserModal, setShowUserModal] = useState(false);
   const [users, setUser] = useState([]);
+  const [searchHandle, setSearchHandle] = useState("");
+  const [diplayUsers, setDiplayUsers] = useState([]);
+
+  const SearchFun = () => {
+    setUser(
+      diplayUsers.filter((user) => {
+        return user.name.toLowerCase().includes(searchHandle.toLowerCase());
+      })
+    );
+  };
+
+  useEffect(SearchFun, [diplayUsers, searchHandle]);
 
   return (
     <div className="container mt-5">
-      <div className="input-group rounded">
-        <input
-          type="search"
-          className="form-control rounded"
-          placeholder="Search"
-          aria-label="Search"
-          aria-describedby="search-addon"
-        />
-      </div>
+      <InputField
+        type="text"
+        id="Seach"
+        value={searchHandle}
+        onChange={(e) => {
+          setSearchHandle(e.target.value);
+        }}
+        placeholder="Seach Here"
+      />
       <div className="d-flex justify-content-end mt-3">
         <Buttons
           color="primary"
@@ -31,7 +44,7 @@ function App() {
       <CreateUserModal
         show={showUserModal}
         setShowUserModal={setShowUserModal}
-        creatUser={setUser}
+        creatUser={setDiplayUsers}
       />
       <div className="mt-5 d-flex flex-wrap gap-4">
         {users.map((user) => {
@@ -43,7 +56,7 @@ function App() {
               gender={user.gender}
               city={user.city}
               id={user.id}
-              setUser={setUser}
+              setUser={setDiplayUsers}
             />
           );
         })}
